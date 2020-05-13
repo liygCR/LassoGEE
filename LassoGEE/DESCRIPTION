@@ -1,0 +1,14 @@
+Package: LassoGEE
+Type: Package
+Title: Generalized Estimating Equations with $L_1$ regularization in High-Dimension
+Version: 0.1.0
+Author: Yaguang Li, Xin Gao, Wei Xu
+Maintainer: Yaguang Li <liygcr7@gmail.com>
+Description: Fits generalized estimating equations with L_1 regularization to longitudinal data with high dimensional covariates. Use a efficient iterative composite gradient descent algorithm (I-CGD).
+License: GPL (>= 2)
+Depends: R (>= 3.6.0)
+Encoding: UTF-8
+LazyData: true
+Imports: Rcpp (>= 1.0.4), RcppArmadillo, PGEE, MASS, mvtnorm
+LinkingTo: Rcpp, RcppArmadillo
+RoxygenNote: 7.1.0
