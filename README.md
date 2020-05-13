@@ -13,4 +13,4 @@ Fits generalized estimating equations with L_1 regularization to longitudinal da
 
 
 ## Citation
-> Li, Y., Gao, X., and Xu, W. (2020). Statistical consistency for generalized estimating equation with L_1 regularization. *Submitted*
+> Li, Y., Gao, X., and Xu, W. (2020). Statistical consistency for generalized estimating equation with L_1 regularization. *(Submitted)*
