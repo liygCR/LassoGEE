@@ -55,7 +55,8 @@ Rcpp::List SHM(arma::mat X, arma::vec y, arma::vec mu,
 
 
 
-  return Rcpp::List::create(Rcpp::Named("S") = S*fihat,
+  return Rcpp::List::create(Rcpp::Named("Smat") = eachS*fihat,
+                            Rcpp::Named("S") = S*fihat,
                             Rcpp::Named("H") = H*fihat,
                             Rcpp::Named("M") = M*fihat);
 }
