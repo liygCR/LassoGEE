@@ -10,8 +10,8 @@ using namespace arma;
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::export]]
 Rcpp::List SHM(arma::mat X, arma::vec y, arma::vec mu,
-                arma::vec mu_eta, arma::vec vari, arma::vec nt,
-                arma::vec index, arma::cube Rhat, int N, double fihat) {
+               arma::vec mu_eta, arma::vec vari, arma::vec nt,
+               arma::vec index, arma::cube Rhat, int N, double fihat) {
 
   int nx = X.n_cols;
   arma::mat eachS(nx, N, arma::fill::zeros);
@@ -35,7 +35,8 @@ Rcpp::List SHM(arma::mat X, arma::vec y, arma::vec mu,
       }
     }
 
-    arma::mat bigV = sqrt(bigA) * Rhat.slice(i) * sqrt(bigA);
+    arma::mat Rtmp = Rhat.slice(i);
+    arma::mat bigV = sqrt(bigA) * Rtmp.submat(0, 0, nt[i]-1, nt[i]-1) * sqrt(bigA);
     arma::mat sum200 = bigD.t() * inv(bigV) * ym;
     eachS.col(i) = sum200;
     arma::mat sum300 = bigD.t() * inv(bigV) * bigD;

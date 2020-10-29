@@ -27,8 +27,9 @@
 #' @param tol The tolerance level used in the algorithm. The default value is \code{1e-3}.
 #' @param Mv If either "stat_M_dep", or "non_stat_M_dep" is specified in corstr,
 #' then this assigns a numeric value for Mv. Otherwise, the default value is NULL.
-#' @param silent A logical variable; if false, the interation counts
+#' @param silent A logical variable; if false, the iteration counts
 #' at each iteration of CGD are printed. The default value is TRUE.
+#' @param verbose A logical variable; Print the out loop iteration counts. The default value is TRUE.
 #' @return A list containing the following components:
 #'   \item{betaest}{return final estimation}
 #'   \item{beta_all_step}{return estimate in each iteration}
@@ -40,13 +41,16 @@
 #' @importFrom PGEE mycor_gee1
 #' @importFrom stats binomial gaussian quantile family
 #' @import MASS
-#' @import RcppArmadillo
 #' @import Rcpp
 #' @useDynLib LassoGEE, .registration = TRUE
 #' @import mvtnorm
+#' @import SimCorMultRes
 #' @seealso cv.LassoGEE
 #' @examples
-#' \dontrun{
+#' # required R package
+#' library(mvtnorm)
+#' library(SimCorMultRes)
+#' #
 #' set.seed(123)
 #' p <- 256
 #' s <- ceiling(p^{1/3})
@@ -89,12 +93,12 @@
 #'                  lambda = lambda, corstr = "unstructured")
 #' proc.time() - ptm
 #' betaest <- nCGDfit$betaest
-#' }
+#'
 LassoGEE <- function(X, y, id, family = binomial("probit"), lambda,
                      corstr = "independence", method = c("CGD", "RWL"),
                      beta.ini = NULL, R = NULL, scale.fix = TRUE,
                      scale.value = 1, maxiter = 50, tol = 1e-3,
-                     silent = TRUE, Mv = NULL)  {
+                     silent = TRUE, Mv = NULL, verbose = TRUE)  {
 
   call <- match.call()
   method=match.arg(method)
@@ -264,7 +268,7 @@ LassoGEE <- function(X, y, id, family = binomial("probit"), lambda,
       beta_all_step[[iter]] <- inner.fit$beta_inner_step
       if (diff <= tol) {
         Smat <- S.H.E.M.val$Smat
-        cat("iter: ",iter, "diff: ",diff,"\n")
+        if(verbose) cat("iter: ",iter, "diff: ",diff,"\n")
         break
       }
 
@@ -276,7 +280,7 @@ LassoGEE <- function(X, y, id, family = binomial("probit"), lambda,
       iter<-iter+1
       if (diff <= tol) {
         Smat <- S.H.E.M.val$Smat
-        cat("iter: ",iter, "diff: ",diff,"\n")
+        if(verbose) cat("iter: ",iter, "diff: ",diff,"\n")
         break
       }
 

@@ -19,7 +19,8 @@ LassoGEE(
   maxiter = 50,
   tol = 0.001,
   silent = TRUE,
-  Mv = NULL
+  Mv = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -60,11 +61,13 @@ The default value is 50.}
 
 \item{tol}{The tolerance level used in the algorithm. The default value is \code{1e-3}.}
 
-\item{silent}{A logical variable; if false, the interation counts
+\item{silent}{A logical variable; if false, the iteration counts
 at each iteration of CGD are printed. The default value is TRUE.}
 
 \item{Mv}{If either "stat_M_dep", or "non_stat_M_dep" is specified in corstr,
 then this assigns a numeric value for Mv. Otherwise, the default value is NULL.}
+
+\item{verbose}{A logical variable; Print the out loop iteration counts. The default value is TRUE.}
 }
 \value{
 A list containing the following components:
@@ -78,7 +81,10 @@ This function fits a \eqn{L_1} penalized GEE model to longitudinal
  data by I-CGD algorithm or re-weighted least square algorithm.
 }
 \examples{
-\dontrun{
+# required R package
+library(mvtnorm)
+library(SimCorMultRes)
+#
 set.seed(123)
 p <- 256
 s <- ceiling(p^{1/3})
@@ -121,7 +127,7 @@ nCGDfit = LassoGEE(X = X, y = y, id = id, family = binomial("probit"),
                  lambda = lambda, corstr = "unstructured")
 proc.time() - ptm
 betaest <- nCGDfit$betaest
-}
+
 }
 \references{
 Li, Y., Gao, X., and Xu, W. (2020). Statistical consistency for
